@@ -2,13 +2,14 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import Logo from "~/components/logo";
+import NNVisualizer from "~/components/nn-visualizer";
 
-import { api } from "~/utils/api";
-
-// import logo from "~/assets/NN-logo-final.svg";
+// import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+
+  const footerLinkStyle = `underline duration-300 dark:text-zinc-400 dark:hover:text-purple-300 text-zinc-800 hover:text-purple-700 decoration-dotted underline-offset-4`;
 
   return (
     <>
@@ -24,9 +25,40 @@ const Home: NextPage = () => {
           media="(prefers-color-scheme: dark)"
         />
       </Head>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
-        <Image src={"favicon.svg"} width={100} height={100} alt={'logo'} className="w-1/2 aspect-square"></Image>
-      </main>
+      <div className="flex flex-col items-center justify-center w-screen h-screen bg-gray-300">
+        <header className="flex flex-row items-center justify-between w-full bg-gray-200 drop-shadow">
+          <div className="flex flex-row items-center pl-2 text-purple-400 fill-current">
+            {/* <Image src={"favicon.svg"} width={50} height={50} alt={'logo'} className="aspect-square fill-[#00ff00!]"></Image> */}
+            {/* <img src={"/favicon.svg"} width={50} height={50} alt={'logo'} className="aspect-square fill-green-500"></img> */}
+            <Logo className="w-12 aspect-square"></Logo>
+            <h1 className="text-4xl italic font-semibold">Visualizer</h1>
+          </div>
+        </header>
+        <main className="flex flex-col items-center justify-center h-full">
+          <NNVisualizer />
+        </main>
+        <footer className="flex w-full px-8 py-2 prose shadow-inner lg:px-0 md:px-8">
+          <p className="m-0 text-sm dark:text-zinc-400 text-zinc-700 md:ml-16">
+            <a
+              className={footerLinkStyle}
+              href="https://opensource.org/licenses/MIT"
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              MIT
+            </a>{" "}
+            2023-present ©{" "}
+            <a
+              className={footerLinkStyle}
+              href="https://github.com/muditg317"
+              target={"_blank"}
+              rel="noreferrer"
+            >
+              muditg317
+            </a>
+          </p>
+        </footer>
+      </div>
     </>
   );
 };
