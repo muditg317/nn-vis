@@ -2,7 +2,7 @@ interface WelcomeProps {
   close: () => void
 }
 export default function Welcome({ close }: WelcomeProps) {
-  console.log("rendering welcome");
+  // console.log("rendering welcome");
   return (<>
     <div className="flex flex-col items-center justify-center w-full h-full">
       <p className="text-2xl">Welcome to the NN Visualizer!</p>

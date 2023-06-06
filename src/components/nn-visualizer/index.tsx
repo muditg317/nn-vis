@@ -63,13 +63,13 @@ const GymTab = tabByName("gym");
 type NNVisTab = Tab;
 
 function newTabs(_usedVisualizerBefore: boolean) {
-  const tabs = TABS.map((tab: TabConst): NNVisTab => {
+  const tabs = TABS.map((tab: TabConst) => {
     return {
       name: tab.name,
       closeable: tab.closeable,
       component: tab.component,
       visible: true,//usedVisualizerBefore ? tab.showToReturningUsers : tab.showToNewUsers,
-    }
+    } as const satisfies NNVisTab;
   });
   return tabs as ArrayOf<'exactly', typeof TABS["length"], ElementOf<typeof tabs>>;
 }

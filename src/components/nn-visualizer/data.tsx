@@ -2,7 +2,7 @@ interface DataProps {
   data: string
 }
 export default function Data({ data }: DataProps) {
-  console.log("data", data);
+  // console.log("data", data);
   return (<>
     <div className="flex flex-col items-center justify-center w-full h-full">
       <p className="text-2xl">Data</p>

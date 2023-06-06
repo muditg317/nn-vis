@@ -51,8 +51,8 @@ interface TabViewProps<T extends Tab> extends TabComponentProps<T> {
 }
 export default function TabView<T extends Tab>({ availableTabs, currentTab, switchTab, closeTab, children }: TabViewProps<T>) {
   const childToRender = childForCurrentTab(children, currentTab);
-  console.log("currentTab", currentTab);
-  console.log("childToRender", childToRender);
+  // console.log("currentTab", currentTab);
+  // console.log("childToRender", childToRender);
   return (<>
     <TabBar<T> availableTabs={availableTabs} currentTab={currentTab} switchTab={switchTab} closeTab={closeTab} />
     <div className={`w-full h-full`}>
