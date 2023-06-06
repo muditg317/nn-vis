@@ -1,10 +1,7 @@
-import { useCallback, useEffect, useReducer, useState } from "react";
-import TabBar, {CloseableTab, type Tab} from "~/components/tab-view";
-import useLocalStorage from "~/hooks/useLocalStorage";
-import modelReducer, { ModelReducerType } from "~/nn/model/reducer";
+import { useCallback, useState } from "react";
+import {type Closeable, type Tab} from "~/components/tab-view";
 import useModelReducer from "~/nn/model/reducer";
 import TabView from "../tab-view";
-import Logo from "../logo";
 import Welcome from "./welcome";
 import { readonlyFind } from "~/utils/type-modifiers";
 import { ElementOf } from "~/utils/types";
@@ -85,16 +82,17 @@ export default function NNVisualizer() {
   // }, []);
   const usedVisualizerBefore = false;
 
-  const [availableTabs, setAvailableTabs] = useState<Tab[]>(newTabs(usedVisualizerBefore));
-  const [currentTab, setCurrentTab] = useState<Tab>(availableTabs[0]!);
+  const [availableTabs, setAvailableTabs] = useState<NNVisTab[]>(newTabs(usedVisualizerBefore));
+  const [currentTab, setCurrentTab] = useState<NNVisTab>(availableTabs[0]!);
 
-  const closeTab = useCallback((tab: CloseableTab) => {
+  const closeTab = useCallback((tab: Closeable<NNVisTab>|TabName) => {
     // console.log(`closing tab ${tab.name} -- current=${currentTab.name}`)
+    const tabNameToClose = typeof tab === "string" ? tab : tab.name;
     setAvailableTabs(available => {
       const filtered = available.filter(t => {
-        return t.name !== tab.name;
+        return t.name !== tabNameToClose;
       });
-      if (currentTab.name === tab.name) {
+      if (currentTab.name === tabNameToClose) {
         // console.log("current tab closed");
         setCurrentTab(filtered[0]!);
       }
@@ -107,8 +105,8 @@ export default function NNVisualizer() {
 
   return (<>
     <TabView<Tab> availableTabs={availableTabs} currentTab={currentTab} switchTab={setCurrentTab} closeTab={closeTab}>
-        <WelcomeTab.component />
-        <ModelTab.component model={model} />
+        <WelcomeTab.component close={() => closeTab(WelcomeTab.name)} />
+        <ModelTab.component model={model} updateModel={updateModel} />
         <DataTab.component data="the data!"/>
         <GymTab.component />
     </TabView>

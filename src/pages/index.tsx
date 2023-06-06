@@ -34,7 +34,7 @@ const Home: NextPage = () => {
             <h1 className="text-4xl italic font-semibold">Visualizer</h1>
           </div>
         </header>
-        <main className="flex flex-col items-center justify-center h-full">
+        <main className="flex flex-col items-center justify-center w-full h-full">
           <NNVisualizer />
         </main>
         <footer className="flex w-full px-8 py-2 prose shadow-inner lg:px-0 md:px-8">
