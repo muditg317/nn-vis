@@ -18,12 +18,12 @@ const Home: NextPage = () => {
         <meta name="description" content="Visualizer for various types of neural networks!" />
         <link key='icon-svg' rel="icon" href="favicon.svg"
           type="image/svg+xml" />
-        <link key='ico-light' rel="icon" href="favicon-light.ico"
+        {/* <link key='ico-light' rel="icon" href="favicon-light.ico"
           media="(prefers-color-scheme: light)"
         />
         <link key='ico-dark' rel="icon" href="favicon-dark.ico"
           media="(prefers-color-scheme: dark)"
-        />
+        /> */}
       </Head>
       <div className="flex flex-col items-center justify-center w-screen h-screen bg-gray-300">
         <header className="flex flex-row items-center justify-between w-full bg-gray-200 drop-shadow">
