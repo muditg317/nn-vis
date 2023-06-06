@@ -7,7 +7,7 @@ interface ModelProps {
   updateModel: Dispatch<ModelAction>
 }
 export default function Model({ model, updateModel }: ModelProps) {
-
+  console.log("model", model);
   return (<>
     <ol className="flex flex-col items-center justify-center w-full h-full">
       <section className="flex flex-row items-center gap-2">

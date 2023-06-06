@@ -5,6 +5,7 @@ interface GymProps {
   model: Model
 }
 export default function Gym({ }: GymProps) {
+  console.log("gym");
   return (<>
     <div className="flex flex-col items-center justify-center w-full h-full">
       <p className="text-2xl">Gym</p>
