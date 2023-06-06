@@ -29,8 +29,8 @@ function getAllValidChildren(children: React.ReactNode) {
 function childForCurrentTab(children: React.ReactNode, currentTab: Tab) {
   const validChildren = getAllValidChildren(children);
   function isChildForCurrentTab(child: ReactElement) {
-    return child.type === currentTab.component
-        || (child.type instanceof Function && child.type.name === currentTab.component.name);
+    return child.type === currentTab.component;
+        // || (child.type instanceof Function && child.type.name === currentTab.component.name);
   }
   // console.log(...validChildren.map(c => [c.type, isChildForCurrentTab(c)]));
   const childToRender = validChildren.find(c => isChildForCurrentTab(c));// ?? validChildren[0] ?? <></>;
