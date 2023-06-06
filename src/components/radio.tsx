@@ -1,4 +1,3 @@
-import { ReadonlyArrayTupleOfConst } from "~/utils/types";
 
 interface RadioProps<O extends string> {
   name: string,

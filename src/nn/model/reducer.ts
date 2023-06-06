@@ -1,5 +1,5 @@
-import { Reducer, useReducer } from "react";
-import { UnionToIntersection } from "~/utils/types";
+import { useReducer } from "react";
+import type { UnionToIntersection } from "~/utils/types";
 
 type MergedWithout<T, K extends keyof T, S> =
     // T;
@@ -31,7 +31,7 @@ export interface Layer {
   id: string,
   type: string,
   name: string,
-  params: any,
+  // params: any,
 }
 
 export interface Model {
@@ -48,7 +48,7 @@ export type ModelAction = ModelAction_setInputType;
 function modelReducer(model: Model, update: ModelAction): Model {
   switch (update.type) {
     case "SET_INPUT_TYPE":
-      return setInputType(model, update as ModelAction_setInputType);
+      return setInputType(model, update);
     default:
       return model;
   }
@@ -64,7 +64,7 @@ function defaultModel(): Model {
     },
     layers: [],
   };
-};
+}
 
 function setInputType(model: Model, update: ModelAction_setInputType): Model {
   const r = {

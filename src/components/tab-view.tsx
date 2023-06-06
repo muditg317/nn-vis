@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { type ReactElement } from "react";
 
 
 export interface Tab {
@@ -59,8 +59,8 @@ export default function TabView<T extends Tab>({ availableTabs, currentTab, swit
   </>)
 }
 
-interface TabBarProps<T extends Tab> extends TabComponentProps<T> {
-}
+type TabBarProps<T extends Tab> = TabComponentProps<T>;
+
 function TabBar<T extends Tab>({ availableTabs, currentTab, switchTab, closeTab }: TabBarProps<T>) {
   return (<>
     <nav className="flex flex-row items-center justify-start w-full h-10 bg-gray-200 border-b-2 border-purple-400">

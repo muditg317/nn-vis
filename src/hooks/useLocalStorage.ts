@@ -1,4 +1,4 @@
-import { SetStateAction, useCallback, useState } from "react"
+import { type SetStateAction, useCallback, useState } from "react"
 
 export default function useLocalStorage<T>(key: string, initialValue: T) {
   const [state, setState] = useState<T>(() => {
@@ -7,9 +7,10 @@ export default function useLocalStorage<T>(key: string, initialValue: T) {
       const value = typeof window !== "undefined" && window.localStorage.getItem(key);
       // Check if the local storage already has any values,
       // otherwise initialize it with the passed initialValue
-      return value ? JSON.parse(value) : initialValue;
+      return value ? JSON.parse(value) as T : initialValue;
     } catch (error) {
       console.log(error);
+      return initialValue;
     }
   });
 
@@ -23,7 +24,7 @@ export default function useLocalStorage<T>(key: string, initialValue: T) {
     } catch (error) {
       console.log(error)
     }
-  }, []);
+  }, [key, state]);
 
   return [state, setValue] as const;
 }

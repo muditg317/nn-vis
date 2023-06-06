@@ -1,7 +1,5 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
 import Logo from "~/components/logo";
 import NNVisualizer from "~/components/nn-visualizer";
 

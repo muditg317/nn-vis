@@ -1,10 +1,9 @@
 import { useCallback, useState } from "react";
-import {type Closeable, type Tab} from "~/components/tab-view";
+import TabView, {type Closeable, type Tab} from "~/components/tab-view";
 import useModelReducer from "~/nn/model/reducer";
-import TabView from "../tab-view";
 import Welcome from "./welcome";
 import { readonlyFind } from "~/utils/type-modifiers";
-import { ElementOf } from "~/utils/types";
+import type { ArrayOf, ElementOf } from "~/utils/types";
 import Model from "./model";
 import Data from "./data";
 import Gym from "./gym";
@@ -46,7 +45,7 @@ const TABS = [
     showToReturningUsers: true,
   },
 ] as const satisfies ReadonlyArray<TabTemplate>;
-// const TAB_NAMES = ["welcome", "model", "data", "gym"] as const;
+// const TAB_NAMES = ["welcome", &ldquo;model&rdquo; , "data", "gym"] as const;
 type TabName = typeof TABS[number]["name"];
 type TabConst = ElementOf<typeof TABS>;
 function tabByName<const N extends TabName>(name: N) {
@@ -54,18 +53,17 @@ function tabByName<const N extends TabName>(name: N) {
   function filterFunc(entry: TabConst): entry is FilteredEntry {
     return entry.name === name;
   }
-  return readonlyFind(TABS, filterFunc)!;
+  return readonlyFind(TABS, filterFunc);
 }
 const WelcomeTab = tabByName("welcome");
 const ModelTab = tabByName("model");
 const DataTab = tabByName("data");
 const GymTab = tabByName("gym");
 
-interface NNVisTab extends Tab {
-}
+type NNVisTab = Tab;
 
-function newTabs(usedVisualizerBefore: boolean) {
-  return TABS.map((tab: TabConst): NNVisTab => {
+function newTabs(_usedVisualizerBefore: boolean) {
+  const tabs = TABS.map((tab: TabConst): NNVisTab => {
     return {
       name: tab.name,
       closeable: tab.closeable,
@@ -73,6 +71,7 @@ function newTabs(usedVisualizerBefore: boolean) {
       visible: true,//usedVisualizerBefore ? tab.showToReturningUsers : tab.showToNewUsers,
     }
   });
+  return tabs as ArrayOf<'exactly', typeof TABS["length"], ElementOf<typeof tabs>>;
 }
 
 export default function NNVisualizer() {
@@ -82,8 +81,8 @@ export default function NNVisualizer() {
   // }, []);
   const usedVisualizerBefore = false;
 
-  const [availableTabs, setAvailableTabs] = useState<NNVisTab[]>(newTabs(usedVisualizerBefore));
-  const [currentTab, setCurrentTab] = useState<NNVisTab>(availableTabs[0]!);
+  const [availableTabs, setAvailableTabs] = useState<ArrayOf<'at least', 1, NNVisTab>>(newTabs(usedVisualizerBefore));
+  const [currentTab, setCurrentTab] = useState<NNVisTab>(availableTabs[0]);
 
   const closeTab = useCallback((tab: Closeable<NNVisTab>|TabName) => {
     // console.log(`closing tab ${tab.name} -- current=${currentTab.name}`)
@@ -92,11 +91,16 @@ export default function NNVisualizer() {
       const filtered = available.filter(t => {
         return t.name !== tabNameToClose;
       });
+      if (filtered.length === 0) {
+        // console.log("no tabs left");
+        return available;
+      }
+      const newTabs = filtered as ArrayOf<'at least', 1, NNVisTab>; 
       if (currentTab.name === tabNameToClose) {
         // console.log("current tab closed");
-        setCurrentTab(filtered[0]!);
+        setCurrentTab(newTabs[0]);
       }
-      return filtered;
+      return newTabs;
     });
   }, [currentTab]);
 
@@ -108,7 +112,7 @@ export default function NNVisualizer() {
         <WelcomeTab.component close={() => closeTab(WelcomeTab.name)} />
         <ModelTab.component model={model} updateModel={updateModel} />
         <DataTab.component data="the data!"/>
-        <GymTab.component />
+        <GymTab.component model={model} />
     </TabView>
   </>)
 }
