@@ -23,7 +23,7 @@ const Home: NextPage = () => {
           media="(prefers-color-scheme: dark)"
         /> */}
       </Head>
-      <div className="flex flex-col items-center justify-center w-screen h-screen bg-gray-300">
+      <div className="flex flex-col items-center justify-center w-full h-screen bg-gray-300">
         <header className="flex flex-row items-center justify-between w-full bg-gray-200 drop-shadow">
           <div className="flex flex-row items-center pl-2 text-purple-400 fill-current">
             {/* <Image src={"favicon.svg"} width={50} height={50} alt={'logo'} className="aspect-square fill-[#00ff00!]"></Image> */}
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
             <h1 className="text-4xl italic font-semibold">Visualizer</h1>
           </div>
         </header>
-        <main className="flex flex-col items-center justify-center w-full h-full">
+        <main className="flex flex-col items-center justify-center w-full overflow-y-auto grow">
           <NNVisualizer />
         </main>
         <footer className="flex w-full px-8 py-2 prose shadow-inner lg:px-0 md:px-8">

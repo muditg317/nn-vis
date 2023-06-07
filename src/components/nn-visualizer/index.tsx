@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import TabView, {type Closeable, type Tab} from "~/components/tab-view";
-import useModelReducer from "~/nn/model/reducer";
+import useModelReducer from "~/nn/model/model-reducer";
 import Welcome from "./welcome";
 import { readonlyFind } from "~/utils/type-modifiers";
 import type { ArrayOf, ElementOf } from "~/utils/types";
@@ -104,13 +104,13 @@ export default function NNVisualizer() {
     });
   }, [currentTab]);
 
-  const [model, updateModel] = useModelReducer();
+  const {model, updateModel, updateLayers} = useModelReducer();
 
 
   return (<>
     <TabView<Tab> availableTabs={availableTabs} currentTab={currentTab} switchTab={setCurrentTab} closeTab={closeTab}>
         <WelcomeTab.component close={() => closeTab(WelcomeTab.name)} />
-        <ModelTab.component model={model} updateModel={updateModel} />
+        <ModelTab.component model={model} updateModel={updateModel} updateLayers={updateLayers} />
         <DataTab.component data="the data!"/>
         <GymTab.component model={model} />
     </TabView>
